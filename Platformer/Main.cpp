@@ -7,9 +7,9 @@
 #include <SFML/Main.hpp>
 #include <SFML/Graphics.hpp>
 
-#define TILEMAP_WIDTH 10
-#define TILEMAP_HEIGHT 8
-#define TILE_SIZE_PX 50
+#define TILEMAP_WIDTH 200
+#define TILEMAP_HEIGHT 200
+#define TILE_SIZE_PX 24
 
 //Initialize all the Player variable
 bool is_grounded = false;
@@ -18,7 +18,7 @@ float max_move_force = 25.0f;
 float min_move_force = 0.1f;
 
 float player_move_speed = 1.0f;
-float player_jump_force = 25.0f;
+float player_jump_force = 15.0f;
 
 float smooth_damp = 0.95f;
 
@@ -34,17 +34,6 @@ int main()
 	// initialize a bool array with all zeroes (false).
 	bool tilemap[TILEMAP_WIDTH * TILEMAP_HEIGHT] = { 0 };
 
-	// set some tiles for testing purposes
-	tilemap[0] = true; // top left
-	tilemap[TILEMAP_WIDTH - 1] = true; // top right
-	tilemap[TILEMAP_WIDTH * TILEMAP_HEIGHT - 1] = true; // bottom right
-	{
-		int x = 3;
-		int y = 2;
-		tilemap[TILEMAP_WIDTH * y + x] = true;
-	}
-
-
 	// Create tile shape
 	sf::RectangleShape tile_shape(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
 	tile_shape.setFillColor(sf::Color(209, 147, 67));
@@ -57,10 +46,8 @@ int main()
 	cursor_shape.setOutlineColor(sf::Color(250, 250, 250));
 	cursor_shape.setOutlineThickness(-3);
 
-
-
 	//Create the window
-	sf::RenderWindow render_window(sf::VideoMode(2000, 800), "Le game");
+	sf::RenderWindow render_window(sf::VideoMode(2000, TILE_SIZE_PX * 25), "Le game");
 
 	//Create the player
 	sf::RectangleShape player_box(sf::Vector2f(24, 24));
@@ -68,18 +55,10 @@ int main()
 	player_box.setOutlineThickness(3);
 	player_box.setOutlineColor(sf::Color(23, 23, 255, 0));
 
-	//Create an object
-	sf::RectangleShape box(sf::Vector2f(24, 24));
-	box.setFillColor(sf::Color(255, 0, 0));
-	box.setOutlineThickness(3);
-	box.setOutlineColor(sf::Color(23, 23, 255, 0));
-
 	//Set the frame limit
 	render_window.setFramerateLimit(60);
 
-	box.setPosition(600, 600);
-
-	player_box.setPosition(50, 0);
+	player_box.setPosition(200, 0);
 
 	//The main loop
 	while (render_window.isOpen())
@@ -90,7 +69,7 @@ int main()
 
 		// Determine tile coordinates that the mouse is hovering
 		sf::Vector2i mouse_pos = sf::Mouse::getPosition(render_window);
-		sf::Vector2i mouse_tile_coord(mouse_pos.x / 50, mouse_pos.y / 50);
+		sf::Vector2i mouse_tile_coord(mouse_pos.x / TILE_SIZE_PX, mouse_pos.y / TILE_SIZE_PX);
 		//printf("%i,%i\n", mouse_tile_coord.x, mouse_tile_coord.y);
 
 		// Editor interaction
@@ -201,7 +180,7 @@ int main()
 		//std::cout << "Acceleration : " << Acceleration.x << " : " << Acceleration.y << std::endl;
 
 		//Make the camera follow the player
-		sf::View view(sf::Vector2f(player_box.getPosition().x + 400, render_window.getSize().y / 2), sf::Vector2f(render_window.getSize().x, render_window.getSize().y));
+		sf::View view(sf::Vector2f(player_box.getPosition().x, render_window.getSize().y / 2), sf::Vector2f(render_window.getSize().x, render_window.getSize().y));
 		render_window.setView(view);
 
 		// draw the tilemap
@@ -221,7 +200,6 @@ int main()
 		//Draw the player depending on his position
 		player_box.setPosition(player_box.getPosition() + speed);
 		render_window.draw(player_box);
-		render_window.draw(box);
 
 		// draw selection cursor
 		cursor_shape.setPosition(TILE_SIZE_PX * mouse_tile_coord.x, TILE_SIZE_PX * mouse_tile_coord.y);
