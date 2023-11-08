@@ -27,19 +27,6 @@ sf::Vector2<float> move_force;
 
 //Initializing all the World variable
 const float gravity_force = 0.91f;
-
-#define TILEMAP_WIDTH  20
-#define TILEMAP_HEIGHT  20
-
-enum Tile
-{
-	OFF,
-	ON,
-	Player
-};
-
-int TileMap[TILEMAP_WIDTH * TILEMAP_HEIGHT] = { 0 };
-
 int main()
 {
 	//Create the window
@@ -57,21 +44,6 @@ int main()
 	box.setOutlineThickness(3);
 	box.setOutlineColor(sf::Color(23, 23, 255, 0));
 
-	sf::RectangleShape OffBox(sf::Vector2f(20, 20));
-	OffBox.setFillColor(sf::Color(0, 0, 0));
-	OffBox.setOutlineThickness(3);
-	OffBox.setOutlineColor(sf::Color(255, 255, 255));
-
-	sf::RectangleShape OnBox(sf::Vector2f(20, 20));
-	OnBox.setFillColor(sf::Color(139, 139, 139));
-	OnBox.setOutlineThickness(3);
-	OnBox.setOutlineColor(sf::Color(255, 255, 255));
-
-	sf::RectangleShape HoverBox(sf::Vector2f(20, 20));
-	HoverBox.setFillColor(sf::Color(0, 0, 0, 0));
-	HoverBox.setOutlineThickness(-5);
-	HoverBox.setOutlineColor(sf::Color(255, 255, 255));
-
 	//Set the frame limit
 	render_window.setFramerateLimit(60);
 
@@ -85,54 +57,6 @@ int main()
 	{
 		//Clear the window
 		render_window.clear();
-
-
-		sf::Vector2i Position = sf::Mouse::getPosition(render_window);
-		sf::Vector2i PositionTile(Position.x / 25, Position.y / 25);
-
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		{
-			if (PositionTile.x < 0 || PositionTile.x >= TILEMAP_WIDTH || PositionTile.y < 0 || PositionTile.y >= TILEMAP_HEIGHT)
-			{
-				std::cout << "out of bounces\n";
-			}
-			else
-			{
-				std::cout << "Press" << std::endl;
-				TileMap[PositionTile.y * TILEMAP_HEIGHT + PositionTile.x] = true;
-			}
-		}
-
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
-		{
-			if (PositionTile.x < 0 || PositionTile.x >= TILEMAP_WIDTH || PositionTile.y < 0 || PositionTile.y >= TILEMAP_HEIGHT)
-			{
-				std::cout << "out of bounces\n";
-			}
-			else
-			{
-				std::cout << "Press" << std::endl;
-				TileMap[PositionTile.y * TILEMAP_HEIGHT + PositionTile.x] = false;
-			}
-		}
-
-		// +25 if i want to set a new one next to this one
-		for (int y = 0; y < TILEMAP_WIDTH; y++)
-		{
-			for (int x = 0; x < TILEMAP_HEIGHT; x++)
-			{
-				if (TileMap[x + y * TILEMAP_WIDTH] == OFF)
-				{
-					OffBox.setPosition(25 * x, 25 * y);
-					render_window.draw(OffBox);
-				}
-				else
-				{
-					OnBox.setPosition(25 * x, 25 * y);
-					render_window.draw(OnBox);
-				}
-			}
-		}
 
 		//Close the window if the "close window" is pressed
 		sf::Event event;
@@ -230,14 +154,10 @@ int main()
 		sf::View view(sf::Vector2f(player_box.getPosition().x + 400, render_window.getSize().y / 2), sf::Vector2f(render_window.getSize().x, render_window.getSize().y));
 		render_window.setView(view);
 
-		//CollisionCheck(box.getPosition(), player_box.getPosition());
-
-		//Map(render_window.getSize(), sf::Vector2f(PositionTile));
 
 		//Draw the player depending on his position
 		player_box.setPosition(player_box.getPosition() + speed);
 		render_window.draw(player_box);
-		render_window.draw(HoverBox);
 		render_window.draw(box);
 		render_window.display();
 	}
