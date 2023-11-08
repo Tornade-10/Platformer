@@ -69,12 +69,12 @@ int main()
 
 		// Determine tile coordinates that the mouse is hovering
 		sf::Vector2i mouse_pos = sf::Mouse::getPosition(render_window);
-		sf::Vector2i mouse_tile_coord(mouse_pos.x / TILE_SIZE_PX, mouse_pos.y / TILE_SIZE_PX);
-		//printf("%i,%i\n", mouse_tile_coord.x, mouse_tile_coord.y);
+		sf::Vector2i mouse_tile_coord((mouse_pos.x + player_box.getPosition().x - 20) / TILE_SIZE_PX, mouse_pos.y / TILE_SIZE_PX);
 
 		// Editor interaction
 		bool mouse_left = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 		bool mouse_right = sf::Mouse::isButtonPressed(sf::Mouse::Right);
+
 		if (mouse_left || mouse_right) {
 			// Check the coordinates are inside our tilemap. Important! Otherwise we could write on unrelated memory and potentially corrupt or crash the program.
 			if (mouse_tile_coord.x < 0 || mouse_tile_coord.x >= TILEMAP_WIDTH || mouse_tile_coord.y < 0 || mouse_tile_coord.y >= TILEMAP_HEIGHT) {
