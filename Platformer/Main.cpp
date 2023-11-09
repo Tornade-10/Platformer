@@ -7,16 +7,13 @@
 #include <SFML/Main.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "TileMap.h"
+
 #define TILEMAP_WIDTH 1000
 #define TILEMAP_HEIGHT 25
 #define TILE_SIZE_PX 24
 
-enum Tile
-{
-	kNothing,
-	kGround,
-	kObstacle
-};
+
 
 //Initialize all the Player variable
 bool is_grounded = false;
@@ -29,14 +26,13 @@ float player_jump_force = 15.0f;
 
 float smooth_damp = 0.95f;
 
-int selected_tile = 0;
-
 sf::Vector2<float> speed;
 sf::Vector2<float> jump_force;
 sf::Vector2<float> move_force;
 
 //Initializing all the World variable
 const float gravity_force = 0.91f;
+
 int main()
 {
 
@@ -52,6 +48,7 @@ int main()
 	cursor_shape.setOutlineColor(sf::Color(250, 250, 250));
 	cursor_shape.setOutlineThickness(-3);
 
+	//---------------------
 #pragma region Tiles
 
 	// Create tiles
@@ -65,10 +62,16 @@ int main()
 	tile_sky.setOutlineColor(sf::Color(50, 160, 168));
 	tile_sky.setOutlineThickness(-2);
 
+	sf::RectangleShape player_start(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
+	player_start.setFillColor(sf::Color(119, 252, 3));
+	player_start.setOutlineColor(sf::Color(119, 252, 3));
+	player_start.setOutlineThickness(-2);
+
 #pragma endregion
 
 	//Create the player
 	sf::RectangleShape player_box(sf::Vector2f(24, 24));
+	player_box.setOrigin(player_box.getSize().x / 2, player_box.getSize().y / 2);
 	player_box.setFillColor(sf::Color(255, 255, 255));
 	player_box.setOutlineThickness(3);
 	player_box.setOutlineColor(sf::Color(23, 23, 255, 0));
@@ -76,7 +79,7 @@ int main()
 	//Set the frame limit
 	render_window.setFramerateLimit(60);
 
-	player_box.setPosition(TILE_SIZE_PX * 45, 0);
+	player_box.setPosition(player_start.getPosition().x, player_start.getPosition().y);
 
 	//The main loop
 	while (render_window.isOpen())
@@ -97,42 +100,10 @@ int main()
 #pragma region TileSelector
 		//_______________________________
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-		{
-			selected_tile = kGround;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-		{
-			selected_tile = kObstacle;
-		}
-
-
-
 		// Determine tile coordinates that the mouse is hovering
-		sf::Vector2i mouse_pos = sf::Mouse::getPosition(render_window);
-		sf::Vector2i mouse_tile_coord((mouse_pos.x + player_box.getPosition().x - render_window.getSize().x / 2) / TILE_SIZE_PX, mouse_pos.y / TILE_SIZE_PX);
+		TileMap::MoosePos(render_window, player_box.getPosition().x);
 
-		// Editor interaction
-		bool mouse_left = sf::Mouse::isButtonPressed(sf::Mouse::Left);
-		bool mouse_right = sf::Mouse::isButtonPressed(sf::Mouse::Right);
 
-		if (mouse_left || mouse_right) {
-			// Check the coordinates are inside our tilemap. Important! Otherwise we could write on unrelated memory and potentially corrupt or crash the program.
-			if (mouse_tile_coord.x < 0 || mouse_tile_coord.x >= TILEMAP_WIDTH || mouse_tile_coord.y < 0 || mouse_tile_coord.y >= TILEMAP_HEIGHT) {
-				printf("Out of bounds\n");
-			}
-			else {
-				// Set the hovered tile to true or false depending on the pressed mouse button.
-				if (mouse_left)
-				{
-					tile_map[mouse_tile_coord.y * TILEMAP_WIDTH + mouse_tile_coord.x] = selected_tile;
-				}
-				else if(mouse_right)
-				{
-					tile_map[mouse_tile_coord.y * TILEMAP_WIDTH + mouse_tile_coord.x] = kNothing;
-				}
-			}
-		}
 		//--------------------------------
 #pragma endregion
 
@@ -224,6 +195,13 @@ int main()
 		//--------------------------------
 #pragma endregion
 
+#pragma region Colider
+
+
+
+#pragma endregion
+
+
 		//Make the camera follow the player
 		sf::View view(sf::Vector2f(player_box.getPosition().x, render_window.getSize().y / 2), sf::Vector2f(render_window.getSize().x, render_window.getSize().y));
 		render_window.setView(view);
@@ -235,14 +213,19 @@ int main()
 			for (int x = 0; x < TILEMAP_WIDTH; x++) {
 				switch (tile_map[x + y * TILEMAP_WIDTH])
 				{
-				case kGround:
+				case TileMap::kGround:
 					tile_ground.setPosition(TILE_SIZE_PX * x, TILE_SIZE_PX * y);
 					render_window.draw(tile_ground);
 					break;
 
-				case kObstacle:
+				case TileMap::kObstacle:
 					tile_sky.setPosition(TILE_SIZE_PX * x, TILE_SIZE_PX * y);
 					render_window.draw(tile_sky);
+					break;
+
+				case TileMap::kPlayerStart:
+					player_start.setPosition(TILE_SIZE_PX * x, TILE_SIZE_PX * y);
+					render_window.draw(player_start);
 					break;
 
 					default:
