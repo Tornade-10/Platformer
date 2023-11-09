@@ -7,9 +7,16 @@
 #include <SFML/Main.hpp>
 #include <SFML/Graphics.hpp>
 
-#define TILEMAP_WIDTH 200
-#define TILEMAP_HEIGHT 200
+#define TILEMAP_WIDTH 1000
+#define TILEMAP_HEIGHT 25
 #define TILE_SIZE_PX 24
+
+enum Tile
+{
+	kNothing,
+	kGround,
+	kObstacle
+};
 
 //Initialize all the Player variable
 bool is_grounded = false;
@@ -32,13 +39,19 @@ int main()
 {
 
 	// initialize a bool array with all zeroes (false).
-	bool tilemap[TILEMAP_WIDTH * TILEMAP_HEIGHT] = { 0 };
+	int tile_map[TILEMAP_WIDTH * TILEMAP_HEIGHT] = { 0 };
+	//std::vector<Tile> tile_map {};
 
-	// Create tile shape
-	sf::RectangleShape tile_shape(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
-	tile_shape.setFillColor(sf::Color(209, 147, 67));
-	tile_shape.setOutlineColor(sf::Color(245, 213, 127));
-	tile_shape.setOutlineThickness(-2);
+	// Create tile
+	sf::RectangleShape tile_ground(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
+	tile_ground.setFillColor(sf::Color(209, 147, 67));
+	tile_ground.setOutlineColor(sf::Color(245, 213, 127));
+	tile_ground.setOutlineThickness(-2);
+
+	sf::RectangleShape tile_sky(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
+	tile_sky.setFillColor(sf::Color(50, 160, 168));
+	tile_sky.setOutlineColor(sf::Color(50, 160, 168));
+	tile_sky.setOutlineThickness(-2);
 
 	// Create cursor shape
 	sf::RectangleShape cursor_shape(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
@@ -58,7 +71,7 @@ int main()
 	//Set the frame limit
 	render_window.setFramerateLimit(60);
 
-	player_box.setPosition(200, 0);
+	player_box.setPosition(TILE_SIZE_PX * 45, 0);
 
 	//The main loop
 	while (render_window.isOpen())
@@ -67,9 +80,10 @@ int main()
 		render_window.clear();
 
 
+		//_______________________________
 		// Determine tile coordinates that the mouse is hovering
 		sf::Vector2i mouse_pos = sf::Mouse::getPosition(render_window);
-		sf::Vector2i mouse_tile_coord((mouse_pos.x + player_box.getPosition().x - 20) / TILE_SIZE_PX, mouse_pos.y / TILE_SIZE_PX);
+		sf::Vector2i mouse_tile_coord((mouse_pos.x + player_box.getPosition().x - render_window.getSize().x / 2) / TILE_SIZE_PX, mouse_pos.y / TILE_SIZE_PX);
 
 		// Editor interaction
 		bool mouse_left = sf::Mouse::isButtonPressed(sf::Mouse::Left);
@@ -82,9 +96,17 @@ int main()
 			}
 			else {
 				// Set the hovered tile to true or false depending on the pressed mouse button.
-				tilemap[mouse_tile_coord.y * TILEMAP_WIDTH + mouse_tile_coord.x] = mouse_left;
+				if (mouse_left)
+				{
+					tile_map[mouse_tile_coord.y * TILEMAP_WIDTH + mouse_tile_coord.x] = kGround;
+				}
+				else if(mouse_right)
+				{
+					tile_map[mouse_tile_coord.y * TILEMAP_WIDTH + mouse_tile_coord.x] = kNothing;
+				}
 			}
 		}
+		//--------------------------------
 
 
 		//Close the window if the "close window" is pressed
@@ -183,19 +205,30 @@ int main()
 		sf::View view(sf::Vector2f(player_box.getPosition().x, render_window.getSize().y / 2), sf::Vector2f(render_window.getSize().x, render_window.getSize().y));
 		render_window.setView(view);
 
-		// draw the tilemap
+
+		//--------------------------------
+		//draw the tilemap
 		for (int y = 0; y < TILEMAP_HEIGHT; y++) {
 			for (int x = 0; x < TILEMAP_WIDTH; x++) {
-				if (tilemap[x + y * TILEMAP_WIDTH]) {
-					// draw tile shape at correct position
-					tile_shape.setPosition(TILE_SIZE_PX * x, TILE_SIZE_PX * y);
-					render_window.draw(tile_shape);
-				}
-				else {
-					// draw nothing                    
+				switch (tile_map[x + y * TILEMAP_WIDTH])
+				{
+				case kGround:
+					tile_ground.setPosition(TILE_SIZE_PX * x, TILE_SIZE_PX * y);
+					render_window.draw(tile_ground);
+					break;
+
+				case kObstacle:
+					tile_sky.setPosition(TILE_SIZE_PX * x, TILE_SIZE_PX * y);
+					render_window.draw(tile_sky);
+					break;
+
+					default:
+						break;
 				}
 			}
 		}
+		//--------------------------------
+
 
 		//Draw the player depending on his position
 		player_box.setPosition(player_box.getPosition() + speed);
