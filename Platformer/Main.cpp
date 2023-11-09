@@ -38,9 +38,13 @@ const float gravity_force = 0.91f;
 int main()
 {
 
+	//Create the window
+	sf::RenderWindow render_window(sf::VideoMode(2000, TILE_SIZE_PX * 25), "Le game");
+
 	// initialize a bool array with all zeroes (false).
 	int tile_map[TILEMAP_WIDTH * TILEMAP_HEIGHT] = { 0 };
-	//std::vector<Tile> tile_map {};
+
+#pragma region Tiles
 
 	// Create tile
 	sf::RectangleShape tile_ground(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
@@ -53,14 +57,13 @@ int main()
 	tile_sky.setOutlineColor(sf::Color(50, 160, 168));
 	tile_sky.setOutlineThickness(-2);
 
+#pragma endregion
+
 	// Create cursor shape
 	sf::RectangleShape cursor_shape(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
 	cursor_shape.setFillColor(sf::Color(209, 147, 67, 0));
 	cursor_shape.setOutlineColor(sf::Color(250, 250, 250));
 	cursor_shape.setOutlineThickness(-3);
-
-	//Create the window
-	sf::RenderWindow render_window(sf::VideoMode(2000, TILE_SIZE_PX * 25), "Le game");
 
 	//Create the player
 	sf::RectangleShape player_box(sf::Vector2f(24, 24));
@@ -79,6 +82,7 @@ int main()
 		//Clear the window
 		render_window.clear();
 
+#pragma region TileSelector
 
 		//_______________________________
 		// Determine tile coordinates that the mouse is hovering
@@ -108,6 +112,7 @@ int main()
 		}
 		//--------------------------------
 
+#pragma endregion
 
 		//Close the window if the "close window" is pressed
 		sf::Event event;
@@ -118,6 +123,10 @@ int main()
 				render_window.close();
 			}
 		}
+
+#pragma region Physic
+
+		//Player physic-----------------------
 
 		//Reset the forces
 		jump_force = sf::Vector2f(0.0f, 0.0f);
@@ -201,10 +210,15 @@ int main()
 		//std::cout << "Speed : " << Speed.x << " : " << Speed.y << std::endl;
 		//std::cout << "Acceleration : " << Acceleration.x << " : " << Acceleration.y << std::endl;
 
+		//--------------------------------
+
+#pragma endregion
+
 		//Make the camera follow the player
 		sf::View view(sf::Vector2f(player_box.getPosition().x, render_window.getSize().y / 2), sf::Vector2f(render_window.getSize().x, render_window.getSize().y));
 		render_window.setView(view);
 
+#pragma region DrawMap
 
 		//--------------------------------
 		//draw the tilemap
@@ -229,6 +243,7 @@ int main()
 		}
 		//--------------------------------
 
+#pragma endregion
 
 		//Draw the player depending on his position
 		player_box.setPosition(player_box.getPosition() + speed);
