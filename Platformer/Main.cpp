@@ -44,21 +44,6 @@ int main()
 	// initialize a bool array with all zeroes (false).
 	int tile_map[TILEMAP_WIDTH * TILEMAP_HEIGHT] = { 0 };
 
-#pragma region Tiles
-
-	// Create tile
-	sf::RectangleShape tile_ground(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
-	tile_ground.setFillColor(sf::Color(209, 147, 67));
-	tile_ground.setOutlineColor(sf::Color(245, 213, 127));
-	tile_ground.setOutlineThickness(-2);
-
-	sf::RectangleShape tile_sky(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
-	tile_sky.setFillColor(sf::Color(50, 160, 168));
-	tile_sky.setOutlineColor(sf::Color(50, 160, 168));
-	tile_sky.setOutlineThickness(-2);
-
-#pragma endregion
-
 	// Create cursor shape
 	sf::RectangleShape cursor_shape(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
 	cursor_shape.setFillColor(sf::Color(209, 147, 67, 0));
