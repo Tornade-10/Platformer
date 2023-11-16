@@ -1,2 +1,6 @@
 ﻿  Main.cpp
-  Platformer.vcxproj -> C:\Users\maxen\Source\Repos\Platformer\x64\Debug\Platformer.exe
+C:\Users\maxen\source\repos\Platformer\Platformer\Main.cpp(51,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  TileMap.cpp
+  Game.cpp
+  Generating Code...
+  Platformer.vcxproj -> C:\Users\maxen\source\repos\Platformer\x64\Debug\Platformer.exe

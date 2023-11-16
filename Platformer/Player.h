@@ -6,32 +6,28 @@
 
 class Player
 {
-
-	bool is_grounded_ = false;
+	sf::RectangleShape player_;
 
 protected:
 
-	float max_moove_force_ = 25.0f;
-	float min_moove_force_ = 0.1f;
+	bool is_grounded_;
 
-	float palyer_moove_speed_ = 1.0f;
-	float player_jump_force_ = 25.0f;
+	sf::Vector2f Y_movement_;
+	sf::Vector2f X_movement_;
+	sf::Vector2f movement_;
 
 public:
 
-	sf::Vector2<float> speed_;
-	sf::Vector2<float> jump_force_;
-	sf::Vector2<float> move_force_;
-
-	Player(bool is_grounded, float max_moove_force, float min_moove_force, float palyer_moove_speed, float player_jump_force, sf::Vector2<float> speed, sf::Vector2<float> jump_force, sf::Vector2<float> move_force);
-
-	int GetIsGrounded();
+	//Create the player
+	explicit Player(sf::Vector2u size);
 
 	void Jump();
 
-	void Moove();
+	void Move();
 
-	void MooveCheck();
 
-	void Stop();
 };
+
+//= sf::Vector2f(0.0f, 0.0f);
+//= sf::Vector2f(0.0f, 0.0f);
+//= sf::Vector2f(0, 0);
