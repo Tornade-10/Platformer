@@ -6,7 +6,7 @@
 
 class Player
 {
-	sf::RectangleShape player_sahpe_;
+	sf::RectangleShape player_shape_;
 
 	bool is_grounded_;
 
@@ -21,8 +21,8 @@ protected:
 	float player_move_speed_;
 	float player_jump_force_;
 
-	sf::Vector2f Y_movement_;
-	sf::Vector2f X_movement_;
+	sf::Vector2f Y_movement_ = sf::Vector2f(0.0f, 0.0f);
+	sf::Vector2f X_movement_ = sf::Vector2f(0.0f, 0.0f);
 	sf::Vector2f movement_;
 
 public:
@@ -32,7 +32,7 @@ public:
 
 	sf::RectangleShape GetPlayerShape()
 	{
-		return player_sahpe_;
+		return player_shape_;
 	}
 
 	bool GetIsGrounded()
@@ -72,9 +72,7 @@ public:
 
 	void Jump();
 	void Move();
-
 };
 
-//= sf::Vector2f(0.0f, 0.0f);
-//= sf::Vector2f(0.0f, 0.0f);
-//= sf::Vector2f(0, 0);
+
+

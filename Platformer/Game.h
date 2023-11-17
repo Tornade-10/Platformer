@@ -14,6 +14,7 @@ class Game
 	sf::RenderWindow render_window_;
 
 	std::vector<Player> player_objects_;
+	std::vector<TileMap> Tilemap_;
 
 	const float gravity_force_ = 0.91f;
 
@@ -25,7 +26,10 @@ public:
 
 	void DrawPlayer();
 
+	void TileEditor();
+	void DrawCursor();
 	void DrawTileMap();
+
 
 	int MainLoop();
 };

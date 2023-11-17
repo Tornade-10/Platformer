@@ -22,74 +22,80 @@ class TileMap
 	// initialize a int array with all zeroes.
 	int tile_map_[TILEMAP_WIDTH * TILEMAP_HEIGHT];
 
+	Tile selected_tile_;
+
+	sf::RectangleShape nothing_tile_;
+	sf::RectangleShape ground_tile_;
+	sf::RectangleShape obstacle_tile_;
+
+	sf::RectangleShape cursor_shape_;
+
+	sf::Vector2f cursor_pos_;
+
 public:
 
 	TileMap();
+
+	Tile GetTile(int x, int y) const
+	{
+		// Check if the coordinates are within bounds
+		if (x >= 0 && x < TILEMAP_WIDTH && y >= 0 && y < TILEMAP_HEIGHT)
+		{
+			// Calculate the index in the 1D array based on 2D coordinates
+			int index = y * TILEMAP_WIDTH + x;
+			return static_cast<Tile>(tile_map_[index]);
+		}
+		else
+		{
+			// Return a default tile if coordinates are out of bounds
+			return Tile::kNothing; // Or any appropriate default tile
+		}
+	}
+	void SetTile(int x, int y, Tile tile_type)
+	{
+		// Check if the coordinates are within bounds
+		if (x >= 0 && x < TILEMAP_WIDTH && y >= 0 && y < TILEMAP_HEIGHT)
+		{
+			// Calculate the index in the 1D array based on 2D coordinates
+			int index = y * TILEMAP_WIDTH + x;
+			tile_map_[index] = static_cast<int>(tile_type);
+		}
+	}
+
+	Tile GetSelectedTile()
+	{
+		return selected_tile_;
+	}
+	void SetSelectedTile(Tile selected_tile)
+	{
+		selected_tile_ = selected_tile;
+	}
+
+	sf::RectangleShape& GetNothingTile() 
+	{
+		return nothing_tile_;
+	}
+	sf::RectangleShape& GetGroundTile() 
+	{
+		return ground_tile_;
+	}
+	sf::RectangleShape& GetObstacleTile() 
+	{
+		return obstacle_tile_;
+	}
+
+	// Getter for cursor shape
+	sf::RectangleShape& GetCursorShape()
+	{
+		return cursor_shape_;
+	}
+
+	sf::Vector2f GetCursorPos()
+	{
+		return cursor_pos_;
+	}
+	void SetCursorPos(const sf::Vector2f& cursor_pos)
+	{
+		cursor_pos_ = cursor_pos;
+	}
 };
-
-
-
-//#pragma region Tiles
-//
-////// Create tiles
-////sf::RectangleShape tile_ground(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
-////tile_ground.setFillColor(sf::Color(209, 147, 67));
-////tile_ground.setOutlineColor(sf::Color(245, 213, 127));
-////tile_ground.setOutlineThickness(-2);
-////
-////sf::RectangleShape tile_sky(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
-////tile_sky.setFillColor(sf::Color(50, 160, 168));
-////tile_sky.setOutlineColor(sf::Color(50, 160, 168));
-////tile_sky.setOutlineThickness(-2);
-//
-//#pragma endregion
-
-//#pragma region TileSelector
-////_______________________________
-//
-////if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-////{
-////	selected_tile = kGround;
-////}
-////if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-////{
-////	selected_tile = kObstacle;
-////}
-////
-////
-////
-////// Determine tile coordinates that the mouse is hovering
-////sf::Vector2i mouse_pos = sf::Mouse::getPosition(render_window_);
-////sf::Vector2i mouse_tile_coord((mouse_pos.x + player_box.getPosition().x - render_window_.getSize().x / 2) / TILE_SIZE_PX, mouse_pos.y / TILE_SIZE_PX);
-////
-////// Editor interaction
-////bool mouse_left = sf::Mouse::isButtonPressed(sf::Mouse::Left);
-////bool mouse_right = sf::Mouse::isButtonPressed(sf::Mouse::Right);
-////
-////if (mouse_left || mouse_right) {
-////	// Check the coordinates are inside our tilemap. Important! Otherwise we could write on unrelated memory and potentially corrupt or crash the program.
-////	if (mouse_tile_coord.x < 0 || mouse_tile_coord.x >= TILEMAP_WIDTH || mouse_tile_coord.y < 0 || mouse_tile_coord.y >= TILEMAP_HEIGHT) {
-////		printf("Out of bounds\n");
-////	}
-////	else {
-////		// Set the hovered tile to true or false depending on the pressed mouse button.
-////		if (mouse_left)
-////		{
-////			tile_map_[mouse_tile_coord.y * TILEMAP_WIDTH + mouse_tile_coord.x] = selected_tile;
-////		}
-////		else if (mouse_right)
-////		{
-////			tile_map_[mouse_tile_coord.y * TILEMAP_WIDTH + mouse_tile_coord.x] = kNothing;
-////		}
-////	}
-////}
-////--------------------------------
-//#pragma endregion
-
-// Create cursor shape
-//sf::RectangleShape cursor_shape(sf::Vector2f(TILE_SIZE_PX, TILE_SIZE_PX));
-//cursor_shape.setFillColor(sf::Color(209, 147, 67, 0));
-//cursor_shape.setOutlineColor(sf::Color(250, 250, 250));
-//cursor_shape.setOutlineThickness(-3);
-//
-//int selected_tile = 1;
