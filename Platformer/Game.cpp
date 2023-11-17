@@ -12,8 +12,24 @@ void Game::Init()
 	render_window_.create(sf::VideoMode(2000, TILE_SIZE_PX * 25), "Le game");
 
 	//Set the frame limit
+	render_window_.setVerticalSyncEnabled(true);
 	render_window_.setFramerateLimit(60);
 }
+
+void Game::Physic()
+{
+	for (auto& p : player_objects_)
+	{
+		if (p.GetYCoord() >= (render_window_.getSize().y - p.GetYCoord()) - 20)
+		{
+			p.GetIsGrounded() == true;
+		}
+	}
+
+
+
+}
+
 
 void Game::MainLoop()
 {

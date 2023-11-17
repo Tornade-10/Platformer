@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Game.h"
 
 #include <iostream>
 #include <SFML/Main.hpp>
@@ -6,6 +7,16 @@
 
 Player::Player(sf::Vector2u size)
 {
+	is_grounded_ = true;
+
+	X_pos_ = player_.getPosition().x;
+	Y_pos_ = player_.getPosition().y;
+
+	max_move_force_ = 25.0f;
+	min_move_force_ = 0.1f;
+
+	player_move_speed_ = 1.0f;
+	player_jump_force_ = 15.0f;
 
 	player_.setSize(sf::Vector2f(24, 24));
 	player_.setOrigin(12, 12);
@@ -22,7 +33,7 @@ void Player::Jump()
 		//Jump if the player is grounded
 		if (is_grounded_)
 		{
-			Y_movement_ = sf::Vector2f(0.0f, 15.0f * -1.0f);
+			Y_movement_ = sf::Vector2f(0.0f, player_jump_force_ * -1.0f);
 		}
 	}
 }
@@ -32,12 +43,12 @@ void Player::Move()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		//Move the player left
-		X_movement_ = sf::Vector2f(-1, 0.0f);
+		X_movement_ = sf::Vector2f(player_move_speed_ * -1, 0.0f);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		//Move the player right
-		X_movement_ = sf::Vector2f(1, 0.0f);
+		X_movement_ = sf::Vector2f(player_move_speed_, 0.0f);
 	}
 	else
 	{
@@ -55,7 +66,6 @@ void Player::Move()
 }
 
 
-
 //#pragma region Physic
 ////Player physic-----------------------
 //
@@ -66,7 +76,7 @@ void Player::Move()
 //
 ////Check if the player is on the ground
 //is_grounded = hb_ground_check.getPosition().y == (tile_ground.getPosition().y - player_box.getSize().y);
-////is_grounded = hb_ground_check.getPosition().y >= (render_window.getSize().y - player_box.getSize().y) - 20;
+//
 //
 //
 ////Check the player input
@@ -75,19 +85,19 @@ void Player::Move()
 //	//Jump if the player is grounded
 //	if (is_grounded)
 //	{
-//		jump_force = sf::Vector2f(0.0f, player_jump_force * -1);
+//		jump_force = sf::Vector2f(0.0f, player_jump_force_ * -1);
 //	}
 //}
 //
 //if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 //{
 //	//Move the player left
-//	move_force = sf::Vector2f(player_move_speed * -1, 0.0f);
+//	move_force = sf::Vector2f(player_move_speed_ * -1, 0.0f);
 //}
 //else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 //{
 //	//Move the player right
-//	move_force = sf::Vector2f(player_move_speed, 0.0f);
+//	move_force = sf::Vector2f(player_move_speed_, 0.0f);
 //}
 //else
 //{

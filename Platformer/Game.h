@@ -4,10 +4,17 @@
 #include <SFML/Main.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "Player.h"
+
+
 class Game
 {
 
 	sf::RenderWindow render_window_;
+
+	std::vector<Player> player_objects_;
+
+	const float gravity_force_ = 0.91f;
 
 public:
 
@@ -15,5 +22,6 @@ public:
 
 	void MainLoop();
 
+	void  Physic();
 };
 
