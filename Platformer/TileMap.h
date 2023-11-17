@@ -22,7 +22,7 @@ class TileMap
 	// initialize a int array with all zeroes.
 	int tile_map_[TILEMAP_WIDTH * TILEMAP_HEIGHT];
 
-	Tile selected_tile_;
+	Tile selected_tile_ = Tile::kNothing;
 
 	sf::RectangleShape nothing_tile_;
 	sf::RectangleShape ground_tile_;

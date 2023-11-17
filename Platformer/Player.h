@@ -72,6 +72,7 @@ public:
 
 	void Jump();
 	void Move();
+	void SlowDown();
 };
 
 
