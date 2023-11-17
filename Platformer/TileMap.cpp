@@ -41,6 +41,6 @@ TileMap::TileMap()
     cursor_shape_.setOutlineColor(sf::Color(250, 250, 250));
     cursor_shape_.setOutlineThickness(-3);
     
-    int selected_tile = 1;
+    int selected_tile_ = 1;
 
 }

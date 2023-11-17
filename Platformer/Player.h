@@ -57,7 +57,7 @@ public:
 	{
 		return Y_pos_;
 	}
-	float SetYCoord(float Y_pos)
+	void SetYCoord(float Y_pos)
 	{
 		Y_pos_ = Y_pos;
 	}
@@ -65,7 +65,7 @@ public:
 	{
 		return X_pos_;
 	}
-	float SetXCoord(float X_pos)
+	void SetXCoord(float X_pos)
 	{
 		X_pos_ = X_pos;
 	}

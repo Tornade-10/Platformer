@@ -30,7 +30,7 @@ void Game::Physic()
 		{
 			p.SetYMovemnt(sf::Vector2f(0, gravity_force_));
 		}
-
+		player_objects_.push_back(p);
 	}
 }
 
@@ -40,11 +40,11 @@ void Game::DrawPlayer()
 
 	for (auto& p : player_objects_)
 	{
-		sf::RectangleShape player_shape = p.GetPlayerShape();
+		std::cout << "X : " << p.GetXCoord() << std::endl;
+		std::cout << "Y : " << p.GetYCoord() << std::endl;
 
-		player_shape.setPosition(p.GetXCoord(), p.GetYCoord());
 
-		render_window_.draw(player_shape);
+		render_window_.draw(p.GetPlayerShape());
 	}
 }
 
@@ -144,6 +144,15 @@ void Game::DrawTileMap()
 
 int Game::MainLoop()
 {
+
+	Player player;
+	player.SetXCoord(0);
+	player.SetYCoord(0);
+	player_objects_.push_back(player);
+
+	TileMap tile_map;
+	Tilemap_.push_back(tile_map);
+
 	//The main loop
 	while (render_window_.isOpen())
 	{
@@ -160,17 +169,28 @@ int Game::MainLoop()
 			}
 		}
 
-		Physic();
+		//Physic();
 
 		DrawPlayer();
 
 		DrawTileMap();
 
 		//Make the camera follow the player
-		//sf::View view(sf::Vector2f(player_box.getPosition().x, render_window_.getSize().y / 2), sf::Vector2f(render_window_.getSize().x, render_window_.getSize().y));
-		//render_window_.setView(view);
+
+		for(auto& p : player_objects_)
+		{
+			sf::View view(sf::Vector2f(p.GetXCoord(), render_window_.getSize().y / 2), sf::Vector2f(render_window_.getSize().x, render_window_.getSize().y));
+			render_window_.setView(view);
+		}
 
 
+		for (auto& t : Tilemap_)
+		{
+			render_window_.draw(t.GetGroundTile());
+			render_window_.draw(t.GetObstacleTile());
+			render_window_.draw(t.GetNothingTile());
+			render_window_.draw(t.GetCursorShape());
+		}
 
 		render_window_.display();
 	}
