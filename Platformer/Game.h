@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Player.h"
+#include "TileMap.h"
 
 
 class Game

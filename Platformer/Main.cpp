@@ -10,4 +10,6 @@ void main()
 	Game game;
 
 	game.Init();
+
+	game.MainLoop();
 }

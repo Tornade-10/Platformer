@@ -20,14 +20,18 @@ void Game::Physic()
 {
 	for (auto& p : player_objects_)
 	{
-		if (p.GetYCoord() >= (render_window_.getSize().y - p.GetYCoord()) - 20)
+		if (p.GetYCoord() >= render_window_.getSize().y - 20)
 		{
-			p.GetIsGrounded() == true;
+			p.SetIsGrounded(true);
 		}
+
+		//Put gravity on the player while he is in the air
+		if (!p.GetIsGrounded())
+		{
+			p.SetYMovemnt(sf::Vector2f(0, gravity_force_));
+		}
+
 	}
-
-
-
 }
 
 
@@ -54,7 +58,7 @@ void Game::MainLoop()
 //draw the tilemap
 		//for (int y = 0; y < TILEMAP_HEIGHT; y++) {
 		//	for (int x = 0; x < TILEMAP_WIDTH; x++) {
-		//		switch (tile_map[x + y * TILEMAP_WIDTH])
+		//		switch (tile_map_[x + y * TILEMAP_WIDTH])
 		//		{
 		//		case kGround:
 		//			tile_ground.setPosition(TILE_SIZE_PX * x, TILE_SIZE_PX * y);
@@ -80,9 +84,6 @@ void Game::MainLoop()
 
 		////Draw the player depending on his position
 		//render_window_.draw(player_box);
-
-		//hb_ground_check.setPosition(hb_ground_check.getPosition() + colider_speed);
-		//render_window_.draw(hb_ground_check);
 
 		//// draw selection cursor
 		//cursor_shape.setPosition(TILE_SIZE_PX * mouse_tile_coord.x, TILE_SIZE_PX * mouse_tile_coord.y);

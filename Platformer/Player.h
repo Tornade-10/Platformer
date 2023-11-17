@@ -27,27 +27,37 @@ protected:
 
 public:
 
-
 	//Create the player
-	explicit Player(sf::Vector2u size);
+	explicit Player();
 
 	bool GetIsGrounded()
 	{
 		return is_grounded_;
+	}
+	void SetIsGrounded(bool grounded)
+	{
+		is_grounded_ = grounded;
+	}
+
+	void SetYMovemnt(sf::Vector2f Y_movement)
+	{
+		Y_movement_ = Y_movement;
+	}
+	void SetXMovemnt(sf::Vector2f X_movement)
+	{
+		X_movement_ = X_movement;
 	}
 
 	float GetYCoord()
 	{
 		return Y_pos_;
 	}
-
 	float GetXCoord()
 	{
 		return X_pos_;
 	}
 
 	void Jump();
-
 	void Move();
 
 };

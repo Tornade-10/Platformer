@@ -8,8 +8,7 @@
 #define TILEMAP_HEIGHT 24
 #define TILE_SIZE_PX 24
 
-// initialize a bool array with all zeroes (false).
-int tile_map[TILEMAP_WIDTH * TILEMAP_HEIGHT] = { 0 };
+
 
 enum class Tile
 {
@@ -20,8 +19,12 @@ enum class Tile
 
 class TileMap
 {
+	// initialize a int array with all zeroes.
+	int tile_map_[TILEMAP_WIDTH * TILEMAP_HEIGHT];
 
+public:
 
+	TileMap();
 };
 
 
@@ -72,11 +75,11 @@ class TileMap
 ////		// Set the hovered tile to true or false depending on the pressed mouse button.
 ////		if (mouse_left)
 ////		{
-////			tile_map[mouse_tile_coord.y * TILEMAP_WIDTH + mouse_tile_coord.x] = selected_tile;
+////			tile_map_[mouse_tile_coord.y * TILEMAP_WIDTH + mouse_tile_coord.x] = selected_tile;
 ////		}
 ////		else if (mouse_right)
 ////		{
-////			tile_map[mouse_tile_coord.y * TILEMAP_WIDTH + mouse_tile_coord.x] = kNothing;
+////			tile_map_[mouse_tile_coord.y * TILEMAP_WIDTH + mouse_tile_coord.x] = kNothing;
 ////		}
 ////	}
 ////}

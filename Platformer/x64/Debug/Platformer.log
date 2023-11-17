@@ -1,4 +1,2 @@
 ﻿  Game.cpp
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(25,22): warning C4553: '==': result of expression not used; did you intend '='?
-Game.obj : error LNK2005: "int * tile_map" (?tile_map@@3PAHA) already defined in TileMap.obj
-C:\Users\maxen\source\repos\Platformer\x64\Debug\Platformer.exe : fatal error LNK1169: one or more multiply defined symbols found
+  Platformer.vcxproj -> C:\Users\maxen\source\repos\Platformer\x64\Debug\Platformer.exe

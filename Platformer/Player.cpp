@@ -5,7 +5,7 @@
 #include <SFML/Main.hpp>
 #include <SFML/Graphics.hpp>
 
-Player::Player(sf::Vector2u size)
+Player::Player()
 {
 	is_grounded_ = true;
 
