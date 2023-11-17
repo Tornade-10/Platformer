@@ -1,2 +1,6 @@
 ﻿  Game.cpp
+  Main.cpp
+C:\Users\maxen\source\repos\Platformer\Platformer\Main.cpp(9,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  Player.cpp
+  Generating Code...
   Platformer.vcxproj -> C:\Users\maxen\source\repos\Platformer\x64\Debug\Platformer.exe

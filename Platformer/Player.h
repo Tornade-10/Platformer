@@ -6,7 +6,7 @@
 
 class Player
 {
-	sf::RectangleShape player_;
+	sf::RectangleShape player_sahpe_;
 
 	bool is_grounded_;
 
@@ -30,6 +30,11 @@ public:
 	//Create the player
 	explicit Player();
 
+	sf::RectangleShape GetPlayerShape()
+	{
+		return player_sahpe_;
+	}
+
 	bool GetIsGrounded()
 	{
 		return is_grounded_;
@@ -52,9 +57,17 @@ public:
 	{
 		return Y_pos_;
 	}
+	float SetYCoord(float Y_pos)
+	{
+		Y_pos_ = Y_pos;
+	}
 	float GetXCoord()
 	{
 		return X_pos_;
+	}
+	float SetXCoord(float X_pos)
+	{
+		X_pos_ = X_pos;
 	}
 
 	void Jump();

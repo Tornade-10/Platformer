@@ -34,8 +34,55 @@ void Game::Physic()
 	}
 }
 
+void Game::DrawPlayer()
+{
+	////Draw the player depending on his position
 
-void Game::MainLoop()
+	for (auto& p : player_objects_)
+	{
+		sf::RectangleShape player_shape = p.GetPlayerShape();
+
+		player_shape.setPosition(p.GetXCoord(), p.GetYCoord());
+
+		render_window_.draw(player_shape);
+	}
+}
+
+void Game::DrawTileMap()
+{
+
+	//// draw selection cursor
+//cursor_shape.setPosition(TILE_SIZE_PX * mouse_tile_coord.x, TILE_SIZE_PX * mouse_tile_coord.y);
+//render_window_.draw(cursor_shape);
+
+#pragma region DrawMap
+	//--------------------------------
+	//draw the tilemap
+			//for (int y = 0; y < TILEMAP_HEIGHT; y++) {
+			//	for (int x = 0; x < TILEMAP_WIDTH; x++) {
+			//		switch (tile_map_[x + y * TILEMAP_WIDTH])
+			//		{
+			//		case kGround:
+			//			tile_ground.setPosition(TILE_SIZE_PX * x, TILE_SIZE_PX * y);
+			//			render_window_.draw(tile_ground);
+			//			break;
+
+			//		case kObstacle:
+			//			tile_sky.setPosition(TILE_SIZE_PX * x, TILE_SIZE_PX * y);
+			//			render_window_.draw(tile_sky);
+			//			break;
+
+			//		default:
+			//			break;
+			//		}
+			//	}
+			//}
+			//--------------------------------
+#pragma endregion
+
+}
+
+int Game::MainLoop()
 {
 	//The main loop
 	while (render_window_.isOpen())
@@ -53,42 +100,16 @@ void Game::MainLoop()
 			}
 		}
 
-#pragma region DrawMap
-//--------------------------------
-//draw the tilemap
-		//for (int y = 0; y < TILEMAP_HEIGHT; y++) {
-		//	for (int x = 0; x < TILEMAP_WIDTH; x++) {
-		//		switch (tile_map_[x + y * TILEMAP_WIDTH])
-		//		{
-		//		case kGround:
-		//			tile_ground.setPosition(TILE_SIZE_PX * x, TILE_SIZE_PX * y);
-		//			render_window_.draw(tile_ground);
-		//			break;
+		DrawPlayer();
 
-		//		case kObstacle:
-		//			tile_sky.setPosition(TILE_SIZE_PX * x, TILE_SIZE_PX * y);
-		//			render_window_.draw(tile_sky);
-		//			break;
-
-		//		default:
-		//			break;
-		//		}
-		//	}
-		//}
-		//--------------------------------
-#pragma endregion
+		DrawTileMap();
 
 		//Make the camera follow the player
 		//sf::View view(sf::Vector2f(player_box.getPosition().x, render_window_.getSize().y / 2), sf::Vector2f(render_window_.getSize().x, render_window_.getSize().y));
 		//render_window_.setView(view);
 
-		////Draw the player depending on his position
-		//render_window_.draw(player_box);
-
-		//// draw selection cursor
-		//cursor_shape.setPosition(TILE_SIZE_PX * mouse_tile_coord.x, TILE_SIZE_PX * mouse_tile_coord.y);
-		//render_window_.draw(cursor_shape);
-
 		render_window_.display();
 	}
+
+	return EXIT_SUCCESS;
 }

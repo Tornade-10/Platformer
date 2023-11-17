@@ -21,8 +21,12 @@ public:
 
 	void Init();
 
-	void MainLoop();
+	void Physic();
 
-	void  Physic();
+	void DrawPlayer();
+
+	void DrawTileMap();
+
+	int MainLoop();
 };
 

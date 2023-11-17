@@ -9,8 +9,8 @@ Player::Player()
 {
 	is_grounded_ = true;
 
-	X_pos_ = player_.getPosition().x;
-	Y_pos_ = player_.getPosition().y;
+	X_pos_ = player_sahpe_.getPosition().x;
+	Y_pos_ = player_sahpe_.getPosition().y;
 
 	max_move_force_ = 25.0f;
 	min_move_force_ = 0.1f;
@@ -18,11 +18,11 @@ Player::Player()
 	player_move_speed_ = 1.0f;
 	player_jump_force_ = 15.0f;
 
-	player_.setSize(sf::Vector2f(24, 24));
-	player_.setOrigin(12, 12);
-	player_.setFillColor(sf::Color(255, 255, 255));
-	player_.setOutlineThickness(3);
-	player_.setOutlineColor(sf::Color(23, 23, 255, 0));
+	player_sahpe_.setSize(sf::Vector2f(24, 24));
+	player_sahpe_.setOrigin(12, 12);
+	player_sahpe_.setFillColor(sf::Color(255, 255, 255));
+	player_sahpe_.setOutlineThickness(3);
+	player_sahpe_.setOutlineColor(sf::Color(23, 23, 255, 0));
 
 }
 
