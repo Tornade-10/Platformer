@@ -18,7 +18,7 @@ class Player
 	float player_jump_force_;
 
 	sf::Vector2f Y_movement_ = sf::Vector2f(0.0f, 0.0f);
-	sf::Vector2f X_movement_ = sf::Vector2f(0.0f, 0.0f);
+	float X_movement_;
 	sf::Vector2f movement_;
 
 public:
@@ -48,11 +48,12 @@ public:
 	{
 		Y_movement_ = Y_movement;
 	}
-	sf::Vector2f GetXMovement()
+
+	float GetXMovement()
 	{
 		return X_movement_;
 	}
-	void SetXMovement(sf::Vector2f X_movement)
+	void SetXMovement(float X_movement)
 	{
 		X_movement_ = X_movement;
 	}

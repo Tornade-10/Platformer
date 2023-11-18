@@ -56,12 +56,13 @@ void Game::PlayerMove()
 		{
 			//Move the player left
 			p.SetXMovement(-1.0f);
-			std::cout << "yo" << std::endl;
+			std::cout << "A" << std::endl;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
 			//Move the player right
-			X_movement_ = sf::Vector2f(1, 0.0f);
+			p.SetXMovement(1.0f);
+			std::cout << "D" << std::endl;
 		}
 		else
 		{
