@@ -22,14 +22,15 @@ public:
 
 	void Init();
 
-	void Physic();
-
+	void PlayerMove();
+	void PlayerJump();
+	void PlayerSlowDown();
+	void PlayerPhysic();
 	void DrawPlayer();
 
 	void TileEditor();
 	void DrawCursor();
 	void DrawTileMap();
-
 
 	int MainLoop();
 };

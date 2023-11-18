@@ -16,10 +16,22 @@ void Game::Init()
 	render_window_.setFramerateLimit(60);
 }
 
-void Game::Physic()
+
+
+void Game::PlayerJump()
 {
 	for (auto& p : player_objects_)
 	{
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			//Jump if the player is grounded
+			if (p.GetIsGrounded())
+			{
+				p.SetYCoord(p.GetJumpForce() * -1.0f);
+			}
+		}
+
 		if (p.GetYCoord() >= render_window_.getSize().y - 20)
 		{
 			p.SetIsGrounded(true);
@@ -28,10 +40,55 @@ void Game::Physic()
 		//Put gravity on the player while he is in the air
 		if (!p.GetIsGrounded())
 		{
-			p.SetYMovemnt(sf::Vector2f(0, gravity_force_));
+			p.SetYMovement(sf::Vector2f(0, gravity_force_));
 		}
 		player_objects_.push_back(p);
 	}
+}
+
+
+
+void Game::PlayerMove()
+{
+	for (auto& p : player_objects_)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			//Move the player left
+			p.SetXMovement(-1.0f);
+			std::cout << "yo" << std::endl;
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			//Move the player right
+			X_movement_ = sf::Vector2f(1, 0.0f);
+		}
+		else
+		{
+			//If nothing is pressed slow down the player
+			if (p.GetIsGrounded())
+			{
+				p.SetXCoord(p.GetXCoord() * 0.75f);
+			}
+			else
+			{
+				//Slow the player a bit less in the air
+				p.SetXCoord(p.GetXCoord() * 0.95f);
+			}
+		}
+	}
+}
+
+void Game::PlayerSlowDown()
+{
+	Y_movement_ = sf::Vector2f(0.0f, 0.0f);
+	X_movement_ = sf::Vector2f(0.0f, 0.0f);
+	movement_ = sf::Vector2f(0.0f, 0.0f);
+}
+
+void Game::PlayerPhysic()
+{
+
 }
 
 void Game::DrawPlayer()
@@ -40,9 +97,8 @@ void Game::DrawPlayer()
 
 	for (auto& p : player_objects_)
 	{
-		std::cout << "X : " << p.GetXCoord() << std::endl;
-		std::cout << "Y : " << p.GetYCoord() << std::endl;
-
+		//std::cout << "X : " << p.GetXCoord() << std::endl;
+		//std::cout << "Y : " << p.GetYCoord() << std::endl;
 
 		render_window_.draw(p.GetPlayerShape());
 	}

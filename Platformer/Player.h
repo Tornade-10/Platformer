@@ -13,12 +13,8 @@ class Player
 	float X_pos_;
 	float Y_pos_;
 
-protected:
-
 	float max_move_force_;
 	float min_move_force_;
-
-	float player_move_speed_;
 	float player_jump_force_;
 
 	sf::Vector2f Y_movement_ = sf::Vector2f(0.0f, 0.0f);
@@ -27,7 +23,7 @@ protected:
 
 public:
 
-	//Create the player
+	//Create the player constructor
 	explicit Player();
 
 	sf::RectangleShape GetPlayerShape()
@@ -44,11 +40,19 @@ public:
 		is_grounded_ = grounded;
 	}
 
-	void SetYMovemnt(sf::Vector2f Y_movement)
+	sf::Vector2f GetYMovement()
+	{
+		return Y_movement_;
+	}
+	void SetYMovement(float Y_movement)
 	{
 		Y_movement_ = Y_movement;
 	}
-	void SetXMovemnt(sf::Vector2f X_movement)
+	sf::Vector2f GetXMovement()
+	{
+		return X_movement_;
+	}
+	void SetXMovement(sf::Vector2f X_movement)
 	{
 		X_movement_ = X_movement;
 	}
@@ -70,9 +74,23 @@ public:
 		X_pos_ = X_pos;
 	}
 
-	void Jump();
-	void Move();
-	void SlowDown();
+	float GetMaxXMove()
+	{
+		return max_move_force_;
+	}
+	float GetMinXMove()
+	{
+		return min_move_force_;
+	}
+	float GetJumpForce()
+	{
+		return player_jump_force_;
+	}
+
+	sf::Vector2f GetMoveSpeed()
+	{
+		return movement_;
+	}
 };
 
 
