@@ -6,6 +6,8 @@
 #include <SFML/Main.hpp>
 #include <SFML/Graphics.hpp>
 
+Player player;
+
 void Game::Init()
 {
 	//Create the window
@@ -16,94 +18,108 @@ void Game::Init()
 	render_window_.setFramerateLimit(60);
 }
 
-
+//-------------------
 
 void Game::PlayerJump()
 {
-	for (auto& p : player_objects_)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		//Jump if the player is grounded
+		if (player.GetIsGrounded())
 		{
-			//Jump if the player is grounded
-			if (p.GetIsGrounded())
-			{
-				p.SetYCoord(p.GetJumpForce() * -1.0f);
-			}
+			player.SetYCoord(player.GetJumpForce() * -1.0f);
 		}
+	}
 
-		if (p.GetYCoord() >= render_window_.getSize().y - 20)
-		{
-			p.SetIsGrounded(true);
-		}
+	if (player.GetYCoord() >= render_window_.getSize().y - 20)
+	{
+		player.SetIsGrounded(true);
+		player.SetYMovement(sf::Vector2f(0.0f, 0.0f));
+	}
 
-		//Put gravity on the player while he is in the air
-		if (!p.GetIsGrounded())
-		{
-			p.SetYMovement(sf::Vector2f(0, gravity_force_));
-		}
-		player_objects_.push_back(p);
+	//Put gravity on the player while he is in the air
+	if (!player.GetIsGrounded())
+	{
+		//player.SetYMovement(sf::Vector2f(0, gravity_force_));
 	}
 }
-
-
 
 void Game::PlayerMove()
 {
-	for (auto& p : player_objects_)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		//Move the player left
+		player.SetXMovement(sf::Vector2f(-1.0f, 0));
+		//std::cout << "A" << std::endl;
+		//std::cout << player.GetXMovement().x << std::endl;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		//Move the player right
+		player.SetXMovement(sf::Vector2f(1, 0));
+		//std::cout << "D" << std::endl;
+		//std::cout << player.GetXMovement().x << std::endl;
+	}
+	else
+	{
+		//If nothing is pressed slow down the player
+		if (player.GetIsGrounded())
 		{
-			//Move the player left
-			p.SetXMovement(-1.0f);
-			std::cout << "A" << std::endl;
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		{
-			//Move the player right
-			p.SetXMovement(1.0f);
-			std::cout << "D" << std::endl;
+			player.SetXCoord(player.GetXCoord() * 0.75f);
 		}
 		else
 		{
-			//If nothing is pressed slow down the player
-			if (p.GetIsGrounded())
-			{
-				p.SetXCoord(p.GetXCoord() * 0.75f);
-			}
-			else
-			{
-				//Slow the player a bit less in the air
-				p.SetXCoord(p.GetXCoord() * 0.95f);
-			}
+			//Slow the player a bit less in the air
+			player.SetXCoord(player.GetXCoord() * 0.95f);
 		}
+
+		player.SetXMovement(sf::Vector2f(0.0f, 0.0f));
+
 	}
+
+	if (player.GetXMovement().x >= player.GetMaxXMove().x)
+	{
+		player.SetXMovement(player.GetMaxXMove());
+	}
+
+	if (player.GetXMovement().x <= player.GetMinXMove().x)
+	{
+		player.SetXMovement(sf::Vector2f(0, 0));
+	}
+
+	//player.SetXMovement(sf::Vector2f(0, 0));
 }
 
-void Game::PlayerSlowDown()
+void Game::PlayerMovement()
 {
-	Y_movement_ = sf::Vector2f(0.0f, 0.0f);
-	X_movement_ = sf::Vector2f(0.0f, 0.0f);
-	movement_ = sf::Vector2f(0.0f, 0.0f);
+	PlayerMove();
+	PlayerJump();
+
+	sf::Vector2f current_position(player.GetXCoord(), player.GetYCoord());
+	sf::Vector2f movement_speed = player.GetMoveSpeed();
+
+	current_position += movement_speed;
+
+	player.SetXCoord(current_position.x);
+	player.SetYCoord(current_position.y);
+
+
+	//std::cout << player.GetMoveSpeed().x << std::endl;
 }
 
-void Game::PlayerPhysic()
-{
-
-}
+//-------------------
 
 void Game::DrawPlayer()
 {
 	////Draw the player depending on his position
 
-	for (auto& p : player_objects_)
-	{
-		//std::cout << "X : " << p.GetXCoord() << std::endl;
-		//std::cout << "Y : " << p.GetYCoord() << std::endl;
+	std::cout << "X : " << player.GetXCoord() << std::endl;
+	std::cout << "Y : " << player.GetYCoord() << std::endl;
 
-		render_window_.draw(p.GetPlayerShape());
-	}
+	PlayerMovement();
+	render_window_.draw(player.GetPlayerShape());
 }
+
 
 void Game::TileEditor()
 {
@@ -201,13 +217,7 @@ void Game::DrawTileMap()
 
 int Game::MainLoop()
 {
-
-	Player player;
-	player.SetXCoord(0);
-	player.SetYCoord(0);
-	player_objects_.push_back(player);
-
-	TileMap tile_map;
+		TileMap tile_map;
 	Tilemap_.push_back(tile_map);
 
 	//The main loop
@@ -226,31 +236,15 @@ int Game::MainLoop()
 			}
 		}
 
-		//Physic();
-
 		DrawPlayer();
-
 		DrawTileMap();
-
-		//Make the camera follow the player
-
-		for(auto& p : player_objects_)
-		{
-			sf::View view(sf::Vector2f(p.GetXCoord(), render_window_.getSize().y / 2), sf::Vector2f(render_window_.getSize().x, render_window_.getSize().y));
-			render_window_.setView(view);
-		}
-
-
-		for (auto& t : Tilemap_)
-		{
-			render_window_.draw(t.GetGroundTile());
-			render_window_.draw(t.GetObstacleTile());
-			render_window_.draw(t.GetNothingTile());
-			render_window_.draw(t.GetCursorShape());
-		}
 
 		render_window_.display();
 	}
 
 	return EXIT_SUCCESS;
 }
+
+//Make the camera follow the player
+//sf::View view(sf::Vector2f(player.GetXCoord(), render_window_.getSize().y / 2), sf::Vector2f(render_window_.getSize().x, render_window_.getSize().y));
+//render_window_.setView(view);

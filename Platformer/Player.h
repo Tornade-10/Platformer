@@ -13,12 +13,12 @@ class Player
 	float X_pos_;
 	float Y_pos_;
 
-	float max_move_force_;
-	float min_move_force_;
+	sf::Vector2f max_move_force_;
+	sf::Vector2f min_move_force_;
 	float player_jump_force_;
 
-	sf::Vector2f Y_movement_ = sf::Vector2f(0.0f, 0.0f);
-	float X_movement_;
+	sf::Vector2f Y_movement_;
+	sf::Vector2f X_movement_;
 	sf::Vector2f movement_;
 
 public:
@@ -44,16 +44,16 @@ public:
 	{
 		return Y_movement_;
 	}
-	void SetYMovement(float Y_movement)
+	void SetYMovement(sf::Vector2f Y_movement)
 	{
 		Y_movement_ = Y_movement;
 	}
 
-	float GetXMovement()
+	sf::Vector2f GetXMovement()
 	{
 		return X_movement_;
 	}
-	void SetXMovement(float X_movement)
+	void SetXMovement(sf::Vector2f X_movement)
 	{
 		X_movement_ = X_movement;
 	}
@@ -75,11 +75,11 @@ public:
 		X_pos_ = X_pos;
 	}
 
-	float GetMaxXMove()
+	sf::Vector2f GetMaxXMove()
 	{
 		return max_move_force_;
 	}
-	float GetMinXMove()
+	sf::Vector2f GetMinXMove()
 	{
 		return min_move_force_;
 	}
@@ -91,6 +91,11 @@ public:
 	sf::Vector2f GetMoveSpeed()
 	{
 		return movement_;
+	}
+	void SetMoveSpeed(sf::Vector2f X_movement, sf::Vector2f Y_movement)
+	{
+		movement_ += X_movement;
+		movement_ += Y_movement;
 	}
 };
 

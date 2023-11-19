@@ -24,8 +24,7 @@ public:
 
 	void PlayerMove();
 	void PlayerJump();
-	void PlayerSlowDown();
-	void PlayerPhysic();
+	void PlayerMovement();
 	void DrawPlayer();
 
 	void TileEditor();

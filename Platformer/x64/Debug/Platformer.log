@@ -1,34 +1,7 @@
 ﻿  Game.cpp
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(71,96): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(71,96): warning C4244:         with
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(71,96): warning C4244:         [
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(71,96): warning C4244:             T=int
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(71,96): warning C4244:         ]
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,73): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,73): warning C4244:         with
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,73): warning C4244:         [
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,73): warning C4244:             T=unsigned int
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,73): warning C4244:         ]
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,73): warning C4244:         and
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,73): warning C4244:         [
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,73): warning C4244:             T=float
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,73): warning C4244:         ]
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,144): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,144): warning C4244:         with
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,144): warning C4244:         [
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,144): warning C4244:             T=unsigned int
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,144): warning C4244:         ]
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,144): warning C4244:         and
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,144): warning C4244:         [
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,144): warning C4244:             T=float
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,144): warning C4244:         ]
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,116): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,116): warning C4244:         with
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,116): warning C4244:         [
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,116): warning C4244:             T=unsigned int
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,116): warning C4244:         ]
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,116): warning C4244:         and
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,116): warning C4244:         [
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,116): warning C4244:             T=float
-C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(182,116): warning C4244:         ]
+C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(144,96): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(144,96): warning C4244:         with
+C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(144,96): warning C4244:         [
+C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(144,96): warning C4244:             T=int
+C:\Users\maxen\source\repos\Platformer\Platformer\Game.cpp(144,96): warning C4244:         ]
   Platformer.vcxproj -> C:\Users\maxen\source\repos\Platformer\x64\Debug\Platformer.exe
